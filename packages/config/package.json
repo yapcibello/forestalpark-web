@@ -1,0 +1,11 @@
+{
+  "name": "@fp/config",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/siteConfig.ts",
+    "./tailwind-preset": "./tailwind.preset.cjs",
+    "./site": "./src/siteConfig.ts"
+  }
+}

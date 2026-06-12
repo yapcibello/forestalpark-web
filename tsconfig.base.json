@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@fp/config":   ["./packages/config/src/siteConfig.ts"],
+      "@fp/config/*": ["./packages/config/src/*"],
+      "@fp/seo":      ["./packages/seo/src/index.ts"],
+      "@fp/seo/*":    ["./packages/seo/src/*"],
+      "@fp/ui":       ["./packages/ui/src/index.ts"],
+      "@fp/ui/*":     ["./packages/ui/src/*"]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+node_modules/
+dist/
+apps/*/dist/
+dist-deploy.zip
+
+.astro/
+apps/*/.astro/
+.env
+.env.*
+!.env.example
+!.env.production.example
+.DS_Store
+.vscode/
+.idea/
+.claude/settings.local.json
+.claude/runs/
+.claude/scheduled_tasks.lock
+
+# Secreto SMTP del formulario (PHPMailer) — solo vive en el servidor.
+api/config.local.php
+**/api/config.local.php
+
+# Mirror local del WP (fase migración) — pesado y privado, no commitear.
+.cache/
+
+# Skills symlinked al repo central + runs del orquestador ypc.
+.claude/skills/
+.ypc/runs/
+
+# Rastreos Screaming Frog — exports crudos, regenerables.
+rastreos/**/*.csv
+rastreos/**/*.xlsx
+rastreos/**/*.xls
+rastreos/**/*.seospider
+rastreos/**/*.dbseospider
+rastreos/**/*.zip

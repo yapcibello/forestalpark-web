@@ -1,0 +1,15 @@
+{
+  "name": "forestalpark-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:www": "pnpm --filter @fp/www dev",
+    "build": "pnpm -r --filter './apps/*' build",
+    "build:www": "pnpm --filter @fp/www build",
+    "check": "pnpm --filter @fp/www exec astro check"
+  }
+}

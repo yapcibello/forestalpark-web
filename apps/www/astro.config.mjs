@@ -1,0 +1,51 @@
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+
+// https://astro.build/config
+export default defineConfig({
+  site: 'https://www.forestalparktenerife.es',
+
+  // i18n: ES en la raíz, EN bajo /en/ con slugs traducidos.
+  // prefixDefaultLocale: false → el español (defaultLocale) no lleva prefijo,
+  // el inglés vive bajo /en/. Las páginas se crean file-based (src/pages y
+  // src/pages/en/) en la fase de migración.
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+  ],
+
+  output: 'static',
+  compressHTML: true,
+
+  // El WordPress original (Avada + Yoast) usa trailing slash en todas las URLs
+  // del sitemap (verificado en discovery). Se usa 'always' como baseline.
+  // PENDIENTE: verificar URL a URL en la fase de migración (R9 — 145 URLs
+  // inmutables, cero 301), ya que el comportamiento exacto de trailing slash
+  // debe replicarse exactamente.
+  trailingSlash: 'always',
+
+  build: {
+    inlineStylesheets: 'auto',
+  },
+
+  vite: {
+    build: {
+      cssMinify: 'lightningcss',
+    },
+    optimizeDeps: {
+      exclude: ['@fp/config', '@fp/seo', '@fp/ui'],
+    },
+    ssr: {
+      noExternal: ['@fp/config', '@fp/seo', '@fp/ui'],
+    },
+  },
+});

@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '@fp/config';
+
+// Placeholder de la home ES — esqueleto fase `estructura`.
+// El contenido real se migra desde el WordPress original en la fase de migración.
+---
+
+<Layout title={siteConfig.title} description={siteConfig.description} lang="es">
+  <main class="mx-auto max-w-3xl p-8">
+    <h1 class="font-heading text-3xl text-primary">{siteConfig.name}</h1>
+    <p class="mt-4 text-secondary">
+      Esqueleto del monorepo en construcción. El contenido se migra en una fase
+      posterior.
+    </p>
+  </main>
+</Layout>

@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos globales mínimos — esqueleto fase `estructura`.
+   El sistema de diseño completo (fuentes, fallbacks anti-CLS, etc.) se
+   define en la fase de diseño/UI. */
