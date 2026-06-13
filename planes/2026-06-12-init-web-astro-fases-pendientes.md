@@ -3,7 +3,9 @@
 > **Fecha**: 2026-06-12
 > **Run ID**: `init-web-astro-20260612-195317`
 > **Run dir**: `.ypc/runs/init-web-astro-20260612-195317/` (artefactos en `artifacts/`)
-> **Estado al guardar**: fase 3 (estructura) completada, **gate pendiente de aprobar**; fases 4-14 pendientes.
+> **Estado al guardar**: fases 1-5 completadas (preflight, discovery, estructura, **migración — réplica fiel de 145 páginas verificada pixel**, blueprint). Próxima: **fase 6 skills [GATE]**. Fases 6-14 pendientes.
+>
+> **Actualización 2026-06-13**: la migración usa **snapshot fiel** (no Content Collections) — ver `docs/deviations.md` y `artifacts/migration_report.md`. Scripts: `scripts/extract-snapshots.mjs`, `scripts/process-css.mjs`, ruta `apps/www/src/pages/[...slug].astro`. Mirror en `.cache/mirror` (gitignored). 378 assets + 28 PDFs en `apps/www/public/`. Para regenerar: re-crawl + `node scripts/extract-snapshots.mjs && node scripts/process-css.mjs && pnpm build:www`.
 
 ## Cómo retomar en una sesión nueva
 

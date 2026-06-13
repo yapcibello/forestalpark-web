@@ -1,5 +1,13 @@
 # Changelog — forestalpark-web
 
+## [2026-06-13] — Migración fiel de las 145 páginas (fases 4-5)
+
+- **Réplica visual exacta**: las 145 URLs del WordPress (Avada + Yoast) construyen como páginas Astro estáticas idénticas. Verificado pixel-equivalente por captura (home y circuitos) original vs build local.
+- **Arquitectura snapshot**: mirror de las 145 URLs → `extract-snapshots.mjs` (head/body/scripts, assets localizados) → `process-css.mjs` (fuentes/iconos de CSS + localización url()) → ruta catch-all `[...slug].astro` (set:html + scripts is:inline). Decisión registrada en `docs/deviations.md` (snapshot vs Content Collections).
+- **Preservados**: iframes Turitop (reservas), 28 PDFs en `/descargas/{es,en}/`, vídeos YouTube, widgets (AEMET, Chaty, Trustindex, Cookie-Script). 378 assets locales (148 MB).
+- **Detectado**: GTM existente del cliente `GTM-PRDC87D3` (retirar al añadir el nuevo en fase 11).
+- Blueprint actualizado al enfoque snapshot (arquitectura.md).
+
 ## [2026-06-12] — Bootstrap del proyecto (workflow init-web-astro, fases 1-3)
 
 - **Preflight**: repo verificado (vacío, main, remote GitHub), herramientas OK (node v26.1.0, pnpm 9.15.0, git 2.54.0), análisis de proyectos hermanos como plantilla (logopedajessica-web base; aportes de smedialab, villena y vitali).

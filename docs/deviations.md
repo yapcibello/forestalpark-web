@@ -34,28 +34,29 @@ Si todos los items responden "No" en la columna 2 y la evidencia esta vacia, el 
 
 ---
 
-## Ejemplo (borrar esta seccion al registrar la primera desviacion real)
-
-```markdown
-### [2026-04-16] — Pipeline --ia fallo en T13; skill creado manualmente
-
-**Que se desvio**: el plan del SDD prescribe crear el skill `gestion/checklist-cierre-fase` via `ypc skills new --ia`. Pipeline fallo por cuota de Claude CLI agotada. Se creo manualmente.
-
-**Por que**: cuota de Claude API agotada para la cuenta (verificado con `ypc ai health`). Sin capacidad de esperar al reset del cupo en esta sesion.
-
-**Impacto**: el skill existe pero sin el pulido IA ni self-critique. Posible gap de calidad en tabla de equivalencias y ejemplos. Revisar en proxima sesion con IA disponible.
-
-**Decision**: skill creado manualmente cumpliendo specs S-A01 a S-A04 salvo pulido estilistico. Issue abierto en PENDIENTES.md para refinar con `--ia` cuando cuota este disponible.
-
-**Aprobacion del usuario**: "adelante manual, no esperamos" (conversacion 2026-04-16 17:35).
-
-**Fecha**: 2026-04-16.
-```
-
----
-
 ## Desviaciones registradas
 
 <!-- Anade nuevas entradas arriba de este comentario, en orden cronologico inverso (mas reciente primero). -->
 
-*(sin desviaciones registradas todavia — al registrar la primera, borrar esta linea)*
+### [2026-06-13] — Migración por snapshot fiel en vez de Content Collections
+
+**Que se desvio**: el plan de la fase migración (heredado de logopedajessica-web) prescribía extraer el contenido del WordPress a Content Collections (posts/faqs) y re-componentizar las páginas en Astro. En su lugar se adoptó **preservación de snapshot**: se sirve el `<head>`/`<body>` original de cada una de las 145 páginas vía una ruta catch-all de Astro (`set:html` + scripts re-emitidos como `is:inline`), localizando solo los assets propios.
+
+**Por que**: el sitio es un page builder Avada (Fusion). Re-componentizar 145 páginas a mano con fidelidad pixel es inviable y diverge visualmente del original — incumpliría el requisito #1 explícito del usuario ("que se vea exactamente visualmente, manteniendo el maquetado"). Evidencia: comparación por captura entre original y build local de `/` y `/circuitos-de-aventura/` resultó pixel-equivalente con el enfoque snapshot. El enfoque es determinista (3 scripts: extract-snapshots.mjs, process-css.mjs, [...slug].astro) y regenerable.
+
+**Impacto**: `apps/www/src/content/config.ts` (esqueleto de colecciones) queda sin poblar. Las mejoras de texto/SEO/GEO/AAA se aplicarán sobre los snapshots o re-componentizando páginas concretas en fases posteriores. Astro sigue controlando el documento → inyección de GTM/JSON-LD/AAA posible sin tocar el maquetado.
+
+**Decision**: snapshot fiel como baseline de la fase migración. Content Collections y optimización multimedia (AVIF/WebP) se difieren (ver tabla P4).
+
+**Aprobacion del usuario**: dentro del alcance acordado — el requisito explícito "se vea exactamente visualmente… sin cambiar el maquetado, imágenes o videos" prevalece sobre el patrón de migración del plantilla. Pendiente de mostrar al usuario en el reporte de fase.
+
+**Fecha**: 2026-06-13.
+
+#### Tabla P4
+
+| Item aplazado | Depende de datos emergentes? | Evidencia concreta | Que se ahorra ahora vs diferido? |
+|:---|:---:|:---|:---|
+| Content Collections (posts/faqs) | Sí | Las fases SEO/GEO (8-9) determinarán si hace falta re-componentizar plantillas concretas para schema/structured-answers; hoy los snapshots ya sirven el contenido fiel | Evita re-componentizar 145 páginas que ya se ven idénticas; se hará selectivo solo donde la auditoría lo pida |
+| Optimización multimedia AVIF/WebP | Sí | La auditoría CWV (fase 13) dirá qué imágenes penalizan LCP; reescribir `<img src>` ahora arriesga la fidelidad pixel recién verificada | Evita tocar 378 assets a ciegas; pasada de performance dirigida por métricas reales |
+
+---

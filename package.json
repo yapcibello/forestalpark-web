@@ -11,5 +11,8 @@
     "build": "pnpm -r --filter './apps/*' build",
     "build:www": "pnpm --filter @fp/www build",
     "check": "pnpm --filter @fp/www exec astro check"
+  },
+  "devDependencies": {
+    "node-html-parser": "^7.1.0"
   }
 }

@@ -1,0 +1,41 @@
+---
+// Ruta catch-all que renderiza los snapshots fieles del WordPress original.
+// Réplica visual exacta: <head> y <body> preservados (set:html), assets
+// localizados a /wp-content, /wp-includes y /descargas. Los <script> se
+// re-emiten como is:inline para que ejecuten (Turitop, Fusion, chaty, etc.).
+//
+// Astro controla el documento → en fases posteriores se inyectan aquí GTM,
+// JSON-LD propio, mejoras AAA y de SEO sin tocar el maquetado.
+import manifest from '../snapshots/manifest.json';
+
+const heads = import.meta.glob('../snapshots/data/*.head.html', { query: '?raw', import: 'default', eager: true });
+const bodies = import.meta.glob('../snapshots/data/*.body.html', { query: '?raw', import: 'default', eager: true });
+
+export async function getStaticPaths() {
+  const m = (await import('../snapshots/manifest.json')).default;
+  return m.map((page) => ({
+    // slug undefined → ruta raíz '/'. El resto sin la barra final (trailingSlash:'always' la añade).
+    params: { slug: page.route === '/' ? undefined : page.route.replace(/^\/|\/$/g, '') },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const headHtml = heads[`../snapshots/data/${page.key}.head.html`] ?? '';
+const bodyHtml = bodies[`../snapshots/data/${page.key}.body.html`] ?? '';
+---
+<html lang={page.htmlLang} class={page.htmlClass}>
+  <head>
+    <Fragment set:html={headHtml} />
+  </head>
+  <body class={page.bodyClass} {...page.bodyDataAttrs}>
+    <Fragment set:html={bodyHtml} />
+    {page.scripts.map((s) =>
+      s.src ? (
+        <script is:inline src={s.src} async={s.async} defer={s.defer} type={s.type} id={s.id}></script>
+      ) : (
+        <script is:inline type={s.type} id={s.id} set:html={s.code}></script>
+      )
+    )}
+  </body>
+</html>

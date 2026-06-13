@@ -6,8 +6,10 @@ Sitio estático Astro 5 (monorepo pnpm) que replica visualmente de forma exacta 
 
 ```mermaid
 graph LR
-    WP[WordPress original<br/>forestalparktenerife.es] -- "crawl HTML (fase 4)" --> CC[Content Collections<br/>posts + faqs]
-    CC --> WWW["apps/www (Astro static)"]
+    WP[WordPress original<br/>Avada] -- "crawl 145 URLs" --> MIRROR[".cache/mirror (gitignored)"]
+    MIRROR -- "extract-snapshots.mjs" --> SNAP["src/snapshots (head/body/scripts)"]
+    SNAP --> CATCH["[...slug].astro (set:html + is:inline)"]
+    CATCH --> WWW["apps/www (Astro static, 145 páginas)"]
     PKG["@fp/config + @fp/seo + @fp/ui"] --> WWW
     WWW -- "deploy FTP" --> HOST[Hosting producción]
     HOST -- iframe --> TURITOP[Turitop reservas]
@@ -34,7 +36,7 @@ Esqueletos — se rellenan en fases 7-8 del workflow (schemas JSON-LD estilo vil
 
 ## Flujo de datos
 
-1. **Migración (fase 4)**: crawl HTML público del WP → mirror local en `.cache/` (gitignored) → extracción a Content Collections (`posts`, `faqs`) y páginas `.astro`; multimedia espejo completo optimizado con sharp (AVIF/WebP).
+1. **Migración (fase 4, hecha)**: crawl de las 145 URLs → mirror en `.cache/` (gitignored) → `extract-snapshots.mjs` produce `src/snapshots/` (head/body/scripts por página, assets localizados) → `process-css.mjs` descarga fuentes/iconos referenciados en CSS y localiza sus `url()`. La ruta catch-all `[...slug].astro` los sirve fieles. Ver `docs/deviations.md` (snapshot vs Content Collections).
 2. **Build**: Astro genera HTML estático con las 145 URLs exactas del sitemap original.
 3. **Runtime**: sitio estático; iframes Turitop client-side; formularios POST a `api/` PHP+SMTP; dataLayer → GTM (Consent Mode v2).
 
