@@ -1,0 +1,60 @@
+---
+// Declaración de accesibilidad (formato W3C/WAI). URL NUEVA (ampliación
+// permitida — no modifica ninguna URL del WP original). Declara el estado
+// REAL de conformidad (AA parcial), sin afirmar AAA total sin evidencia
+// triangulada. Página propia (no snapshot) con estándares AAA de contraste.
+import siteConfig from '@fp/config';
+const lastReview = '2026-06-13';
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Declaración de accesibilidad — {siteConfig.name}</title>
+    <meta name="description" content="Declaración de accesibilidad de Forestal Park Tenerife según WCAG 2.2 y la normativa española (RD 1112/2018)." />
+    <link rel="canonical" href={`${siteConfig.url}/accesibilidad/`} />
+    <link rel="alternate" hreflang="en" href={`${siteConfig.url}/en/accessibility/`} />
+    <link rel="alternate" hreflang="es" href={`${siteConfig.url}/accesibilidad/`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteConfig.url}/accesibilidad/`} />
+    <style is:inline>
+      :root { color-scheme: light; }
+      body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; background: #fff; margin: 0; }
+      .wrap { max-width: 50rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+      a { color: #1b5e20; } a:focus-visible { outline: 3px solid #1b5e20; outline-offset: 2px; }
+      h1 { font-size: 1.9rem; line-height: 1.2; } h2 { margin-top: 2.2rem; font-size: 1.3rem; }
+      .home { display: inline-block; margin-bottom: 1.5rem; font-weight: 600; }
+      .skip { position: absolute; left: -9999px; } .skip:focus { left: 1rem; top: 1rem; background: #1b5e20; color: #fff; padding: .6rem 1rem; border-radius: .25rem; }
+      ul { padding-left: 1.2rem; }
+    </style>
+  </head>
+  <body>
+    <a href="#contenido" class="skip">Saltar al contenido</a>
+    <div class="wrap">
+      <a href="/" class="home">← Volver a Forestal Park Tenerife</a>
+      <main id="contenido">
+        <h1>Declaración de accesibilidad</h1>
+        <p>Forestal Park Tenerife se compromete a hacer accesible su sitio web conforme a las <strong>Directrices de Accesibilidad para el Contenido Web (WCAG) 2.2</strong> y a la normativa española aplicable (<abbr title="Real Decreto">RD</abbr> 1112/2018).</p>
+
+        <h2>Estado de conformidad</h2>
+        <p>Este sitio es <strong>parcialmente conforme</strong> con el nivel <strong>AA de las WCAG 2.2</strong>: la mayoría de los criterios se cumplen, con las excepciones que se indican abajo. El nivel <strong>AAA</strong> se aplica de forma selectiva en el contenido propio (contraste reforzado, idioma marcado, ayuda contextual) y es un objetivo en mejora continua, no una conformidad total declarada.</p>
+
+        <h2>Contenido no accesible</h2>
+        <p>En el momento de esta revisión se conocen las siguientes limitaciones, en proceso de corrección:</p>
+        <ul>
+          <li>Algunos componentes heredados del maquetado original (galerías, controles del tema) pueden no exponer nombres accesibles completos.</li>
+          <li>El sistema de reservas se presta mediante un <strong>iframe de terceros (TuriTop)</strong> cuyo contenido no está bajo nuestro control directo de accesibilidad.</li>
+          <li>Determinadas imágenes decorativas y de fondo pueden carecer de texto alternativo donde no aporta información.</li>
+        </ul>
+
+        <h2>Métodos de evaluación</h2>
+        <p>La accesibilidad se evalúa mediante una metodología triangulada (análisis automático con Lighthouse y axe-core, revisión del árbol de accesibilidad y pruebas con teclado y lector de pantalla). La auditoría triangulada completa está <strong>en curso</strong>; esta declaración se actualizará con sus resultados.</p>
+
+        <h2>Vías de contacto y reclamación</h2>
+        <p>Si detecta barreras de accesibilidad, puede comunicárnoslo en <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> o en el teléfono {siteConfig.phone}. Atenderemos su solicitud y, si procede, le ofreceremos una alternativa accesible a la información o servicio.</p>
+
+        <h2>Fecha</h2>
+        <p>Declaración revisada por última vez el <strong>{lastReview}</strong>. Próxima revisión prevista tras completar la auditoría triangulada.</p>
+      </main>
+    </div>
+  </body>
+</html>

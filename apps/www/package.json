@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@astrojs/check": "catalog:",
+    "@astrojs/sitemap": "^3.7.3",
     "@astrojs/tailwind": "catalog:",
     "@fp/config": "workspace:*",
     "@fp/seo": "workspace:*",

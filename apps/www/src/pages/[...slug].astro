@@ -6,7 +6,7 @@
 //
 // Astro controla el documento → en fases posteriores se inyectan aquí GTM,
 // JSON-LD propio, mejoras AAA y de SEO sin tocar el maquetado.
-import manifest from '../snapshots/manifest.json';
+import { buildTouristAttractionSchema } from '@fp/seo';
 
 const heads = import.meta.glob('../snapshots/data/*.head.html', { query: '?raw', import: 'default', eager: true });
 const bodies = import.meta.glob('../snapshots/data/*.body.html', { query: '?raw', import: 'default', eager: true });
@@ -23,10 +23,18 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 const headHtml = heads[`../snapshots/data/${page.key}.head.html`] ?? '';
 const bodyHtml = bodies[`../snapshots/data/${page.key}.body.html`] ?? '';
+
+// Mejora SEO local: TouristAttraction solo en la home (ES y EN). El resto del
+// JSON-LD (Organization, WebSite, BreadcrumbList, FAQPage) ya viene de Yoast.
+const isHome = page.route === '/' || page.route === '/en/';
+const touristSchema = isHome ? buildTouristAttractionSchema(page.lang as 'es' | 'en') : null;
 ---
 <html lang={page.htmlLang} class={page.htmlClass}>
   <head>
     <Fragment set:html={headHtml} />
+    {touristSchema && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(touristSchema)} />
+    )}
   </head>
   <body class={page.bodyClass} {...page.bodyDataAttrs}>
     <Fragment set:html={bodyHtml} />

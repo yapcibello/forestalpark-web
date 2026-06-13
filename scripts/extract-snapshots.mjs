@@ -63,8 +63,10 @@ function extract(file) {
   const scripts = [];
   for (const s of doc.querySelectorAll('script')) {
     const type = s.getAttribute('type') || '';
-    // Saltar JSON-LD de Yoast (lo regeneramos en la fase SEO) y datos no JS.
-    if (type === 'application/ld+json') { s.remove(); continue; }
+    // Preservar JSON-LD de Yoast (LocalBusiness, FAQPage, BreadcrumbList,
+    // Organization, WebSite): son datos, no necesitan ejecutar — basta con
+    // que queden en el HTML (set:html). Se dejan intactos en el <head>.
+    if (type === 'application/ld+json') continue;
     const src = s.getAttribute('src');
     const entry = { src: src ? localizeAssets(src) : null };
     if (s.getAttribute('async') !== undefined) entry.async = true;

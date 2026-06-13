@@ -1,0 +1,59 @@
+---
+// Accessibility statement (W3C/WAI format). New URL (allowed extension —
+// does not modify any original WP URL). Declares the REAL conformance status
+// (partial AA), without claiming full AAA without triangulated evidence.
+import siteConfig from '@fp/config';
+const lastReview = '2026-06-13';
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Accessibility statement — {siteConfig.name}</title>
+    <meta name="description" content="Accessibility statement for Forestal Park Tenerife under WCAG 2.2 and Spanish regulation (RD 1112/2018)." />
+    <link rel="canonical" href={`${siteConfig.url}/en/accessibility/`} />
+    <link rel="alternate" hreflang="es" href={`${siteConfig.url}/accesibilidad/`} />
+    <link rel="alternate" hreflang="en" href={`${siteConfig.url}/en/accessibility/`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteConfig.url}/accesibilidad/`} />
+    <style is:inline>
+      :root { color-scheme: light; }
+      body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; background: #fff; margin: 0; }
+      .wrap { max-width: 50rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+      a { color: #1b5e20; } a:focus-visible { outline: 3px solid #1b5e20; outline-offset: 2px; }
+      h1 { font-size: 1.9rem; line-height: 1.2; } h2 { margin-top: 2.2rem; font-size: 1.3rem; }
+      .home { display: inline-block; margin-bottom: 1.5rem; font-weight: 600; }
+      .skip { position: absolute; left: -9999px; } .skip:focus { left: 1rem; top: 1rem; background: #1b5e20; color: #fff; padding: .6rem 1rem; border-radius: .25rem; }
+      ul { padding-left: 1.2rem; }
+    </style>
+  </head>
+  <body>
+    <a href="#content" class="skip">Skip to content</a>
+    <div class="wrap">
+      <a href="/en/" class="home">← Back to Forestal Park Tenerife</a>
+      <main id="content">
+        <h1>Accessibility statement</h1>
+        <p>Forestal Park Tenerife is committed to making its website accessible in accordance with the <strong>Web Content Accessibility Guidelines (WCAG) 2.2</strong> and applicable Spanish regulation (<abbr title="Royal Decree">RD</abbr> 1112/2018).</p>
+
+        <h2>Conformance status</h2>
+        <p>This site is <strong>partially conformant</strong> with <strong>WCAG 2.2 level AA</strong>: most criteria are met, with the exceptions listed below. <strong>AAA</strong> is applied selectively to our own content (enhanced contrast, language marking, contextual help) as a continuous-improvement goal, not a declared full conformance.</p>
+
+        <h2>Non-accessible content</h2>
+        <p>At the time of this review the following limitations are known and being addressed:</p>
+        <ul>
+          <li>Some components inherited from the original layout (galleries, theme controls) may not expose complete accessible names.</li>
+          <li>The booking system is provided through a <strong>third-party iframe (TuriTop)</strong> whose content is not under our direct accessibility control.</li>
+          <li>Certain decorative and background images may lack alternative text where it conveys no information.</li>
+        </ul>
+
+        <h2>Evaluation methods</h2>
+        <p>Accessibility is assessed with a triangulated methodology (automated analysis with Lighthouse and axe-core, accessibility-tree review, and keyboard and screen-reader testing). The full triangulated audit is <strong>ongoing</strong>; this statement will be updated with its results.</p>
+
+        <h2>Feedback and complaints</h2>
+        <p>If you find accessibility barriers, please let us know at <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> or by phone at {siteConfig.phone}. We will handle your request and, where appropriate, offer an accessible alternative to the information or service.</p>
+
+        <h2>Date</h2>
+        <p>Statement last reviewed on <strong>{lastReview}</strong>. Next review planned after completing the triangulated audit.</p>
+      </main>
+    </div>
+  </body>
+</html>

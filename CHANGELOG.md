@@ -1,5 +1,16 @@
 # Changelog — forestalpark-web
 
+## [2026-06-13] — Baselines y cierre del workflow init-web-astro (fases 6-14)
+
+- **Skills**: 31 skills instalados (Astro/SEO/GEO/AAA/GTM/Turitop/Ads).
+- **SEO**: schema Yoast restaurado en las 145 páginas (FAQPage, Organization, WebSite, BreadcrumbList) + TouristAttraction nuevo en home; sitemaps (Astro nuevo + Yoast original preservado); robots.txt.
+- **GEO**: `llms.txt` con datos verificables, páginas e índice de 76 FAQ.
+- **Accesibilidad**: declaración `/accesibilidad/` y `/en/accessibility/` (AA parcial real, no AAA total sin evidencia).
+- **GTM/SEM**: decisión de conservar el contenedor existente `GTM-PRDC87D3` (ya tiene `purchase`, `pasos_turitop`, `generate_lead`, `correo`, `whatsapp`, `descarga` + Google Ads vinculado). Inventario vía MCP GA4 (property 343612965).
+- **Deploy**: `scripts/deploy-ftp.sh` (lftp + smoke), endpoint `api/contacto.php` (PHP+SMTP), `.env.example`.
+- **Verificación**: build 147 páginas; **inmutabilidad 0/145 URLs sin construir**; Lighthouse SEO 92, A11y 85. Veredicto PASS.
+- **Plan F0**: `planes/2026-06-13-f0-bootstrap-forestalpark/` con tareas hasta producción.
+
 ## [2026-06-13] — Migración fiel de las 145 páginas (fases 4-5)
 
 - **Réplica visual exacta**: las 145 URLs del WordPress (Avada + Yoast) construyen como páginas Astro estáticas idénticas. Verificado pixel-equivalente por captura (home y circuitos) original vs build local.

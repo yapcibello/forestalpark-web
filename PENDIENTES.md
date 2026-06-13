@@ -1,9 +1,12 @@
 # Pendientes — forestalpark-web
 
-## Prioritario
+## Prioritario — Camino a producción (ver [plan F0](planes/2026-06-13-f0-bootstrap-forestalpark/README.md))
 
-- [ ] Continuar workflow init-web-astro (run `init-web-astro-20260612-195317`): **aprobar gate de fase 3 (estructura)** y ejecutar fases 4-14 — ver [planes/2026-06-12-init-web-astro-fases-pendientes.md](planes/2026-06-12-init-web-astro-fases-pendientes.md)
-- [ ] Fase 4 migración: crawl de las 145 URLs del WP (mirror `.cache/`), Content Collections, multimedia espejo + sharp→AVIF/WebP, verificación trailing slash URL a URL (R9)
+- [ ] **F0-1** Repuntar formularios Fusion a `/api/contacto.php` + adaptar submit (bloqueante)
+- [ ] **F0-2/3** Credenciales FTP (`.env`) y SMTP (`config.local.php` en servidor) + PHPMailer
+- [ ] **F0-4** Verificar las 145 URLs en 200 tras el deploy
+- [ ] **F0-5** Remediación a11y (iframes title, labels, contraste) → AA total
+- [ ] **F0-6** Mejorar textos de páginas pillar (requisito del cliente) sin tocar maquetado
 
 ## Mejoras
 

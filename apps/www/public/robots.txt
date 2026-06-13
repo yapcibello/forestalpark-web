@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.forestalparktenerife.es/sitemap_index.xml
+Sitemap: https://www.forestalparktenerife.es/sitemap-index.xml

@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +21,12 @@ export default defineConfig({
   integrations: [
     tailwind({
       applyBaseStyles: false,
+    }),
+    // Genera /sitemap-index.xml + /sitemap-0.xml con las 145 URLs.
+    // El hreflang ES↔EN ya viaja en el <head> preservado de cada página (Yoast).
+    sitemap({
+      changefreq: 'monthly',
+      lastmod: new Date('2026-06-13'),
     }),
   ],
 
