@@ -2,7 +2,7 @@
 
 ## Prioritario — Camino a producción (ver [plan F0](planes/2026-06-13-f0-bootstrap-forestalpark/README.md))
 
-- [ ] **F0-1** Repuntar formularios Fusion a `/api/contacto.php` + adaptar submit (bloqueante)
+- [x] **F0-1** Formularios Fusion reenviados a `/api/contacto.php` vía interceptor en captura (`public/js/fp-forms.js`) — verificado e2e (submit → endpoint → redirect a `/gracias/`). Pendiente solo el SMTP real en servidor (F0-3)
 - [ ] **F0-2/3** Credenciales FTP (`.env`) y SMTP (`config.local.php` en servidor) + PHPMailer
 - [ ] **F0-4** Verificar las 145 URLs en 200 tras el deploy
 - [ ] **F0-5** Remediación a11y (iframes title, labels, contraste) → AA total

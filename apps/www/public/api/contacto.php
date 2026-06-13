@@ -50,19 +50,33 @@ $email   = field('your_email', 'email');
 $mensaje = field('mensaje', 'description', 'message');
 $pagina  = field('pagina_origen') ?: ($_SERVER['HTTP_REFERER'] ?? '');
 
-// Validación mínima.
 $emailValido = filter_var($email, FILTER_VALIDATE_EMAIL);
-if ($nombre === '' || !$emailValido || $mensaje === '') {
+if (!$emailValido) {
     http_response_code(422);
-    echo json_encode(['ok' => false, 'error' => 'campos_invalidos']);
+    echo json_encode(['ok' => false, 'error' => 'email_invalido']);
     exit;
 }
 
-$asunto = 'Contacto web — ' . $nombre;
-$cuerpo = "Nombre: $nombre\n"
-        . "Email: $email\n"
-        . "Página: $pagina\n\n"
-        . "Mensaje:\n$mensaje\n";
+// Dos formularios del sitio: newsletter (solo email) y contacto (nombre+mensaje).
+$esNewsletter = ($nombre === '' && $mensaje === '');
+
+if ($esNewsletter) {
+    $asunto = 'Nueva suscripción al boletín — ' . $email;
+    $cuerpo = "Nueva suscripción al boletín de noticias.\n\n"
+            . "Email: $email\n"
+            . "Página: $pagina\n";
+} else {
+    if ($nombre === '' || $mensaje === '') {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'error' => 'campos_invalidos']);
+        exit;
+    }
+    $asunto = 'Contacto web — ' . $nombre;
+    $cuerpo = "Nombre: $nombre\n"
+            . "Email: $email\n"
+            . "Página: $pagina\n\n"
+            . "Mensaje:\n$mensaje\n";
+}
 
 $enviado = false;
 

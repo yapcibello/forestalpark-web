@@ -23,7 +23,7 @@
 
 | # | Tarea | Detalle | Responsable |
 |---|---|---|---|
-| F0-1 | **Repuntar formularios** | Cambiar `action` de los formularios Fusion a `/api/contacto.php` y adaptar el submit (AJAX Fusion → fetch/POST). Sin esto, los formularios no envían. | Dev |
+| ~~F0-1~~ ✅ | **Formularios repuntados** | HECHO: `public/js/fp-forms.js` intercepta el submit de los formularios Fusion en fase de captura y los envía a `/api/contacto.php`; éxito → redirección a `/gracias/` (`/en/thank-you/`). Verificado end-to-end en el navegador. Solo falta el SMTP real (F0-3). | ✅ |
 | F0-2 | **Credenciales FTP** | Rellenar `.env` (FTP_HOST/USER/PASS/REMOTE_DIR) con los datos del hosting actual. | Cliente + Dev |
 | F0-3 | **SMTP del formulario** | Crear `apps/www/public/api/config.local.php` en el servidor con credenciales SMTP; subir PHPMailer (`vendor/`) o validar `mail()`. | Dev |
 | F0-4 | **Verificar URLs en producción** | Tras subir, el smoke de `deploy-ftp.sh` debe dar 200 en las URLs clave; comprobar manualmente una muestra de las 145. | Dev |

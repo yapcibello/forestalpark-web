@@ -45,5 +45,7 @@ const touristSchema = isHome ? buildTouristAttractionSchema(page.lang as 'es' | 
         <script is:inline type={s.type} id={s.id} set:html={s.code}></script>
       )
     )}
+    {/* Reenvía los formularios Fusion al endpoint PHP (admin-ajax.php ya no existe). */}
+    <script is:inline src="/js/fp-forms.js" defer></script>
   </body>
 </html>
