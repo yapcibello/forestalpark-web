@@ -1,5 +1,12 @@
 # Changelog — forestalpark-web
 
+## [2026-06-13] — Cobertura total de URLs + formularios funcionales
+
+- **Formularios**: `public/js/fp-forms.js` intercepta los formularios Fusion (captura + `stopImmediatePropagation`) y los reenvía a `/api/contacto.php`; éxito → `/gracias/`. Verificado end-to-end. `contacto.php` distingue newsletter de contacto.
+- **URLs más allá del sitemap**: descubiertas y migradas **30 URLs reales** fuera del sitemap Yoast (16 páginas de categoría FAQ ES/EN + 14 de paginación real de blog/faq-items). Profundidad de paginación detectada por fingerprint para evitar los soft-200 duplicados de WordPress.
+- **Redirects fieles**: 4 (archivos de autor → home; 2 posts EN con slug antiguo → su canónica migrada), replicando el comportamiento del WP.
+- **Total**: 181 páginas construidas (175 snapshots + 4 redirects + 2 accesibilidad). Inmutabilidad 0/145 del sitemap. `scripts/urls-extra-no-sitemap.txt` documenta las URLs extra para reproducir el crawl.
+
 ## [2026-06-13] — Baselines y cierre del workflow init-web-astro (fases 6-14)
 
 - **Skills**: 31 skills instalados (Astro/SEO/GEO/AAA/GTM/Turitop/Ads).

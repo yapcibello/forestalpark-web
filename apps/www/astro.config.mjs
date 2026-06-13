@@ -33,6 +33,18 @@ export default defineConfig({
   output: 'static',
   compressHTML: true,
 
+  // El WP original redirige los archivos de autor a la home (no son páginas
+  // propias). Se replica ese comportamiento (única redirección — el resto de
+  // URLs es inmutable y se sirve directa).
+  redirects: {
+    '/author/fptadmin/': '/',
+    '/en/author/fptadmin/': '/en/',
+    // Posts EN enlazados con el slug de categoría antiguo (/general-en/) que el
+    // WP redirige a su versión canónica (/general/), ya migrada.
+    '/en/general-en/halloween-event-amaro-pargo-escape-room/': '/en/general/halloween-event-amaro-pargo-escape-room/',
+    '/en/general-en/we-are-open-every-day-of-the-2024-december-long-weekend-in-tenerife/': '/en/general/we-are-open-every-day-of-the-2024-december-long-weekend-in-tenerife/',
+  },
+
   // El WordPress original (Avada + Yoast) usa trailing slash en todas las URLs
   // del sitemap (verificado en discovery). Se usa 'always' como baseline.
   // PENDIENTE: verificar URL a URL en la fase de migración (R9 — 145 URLs
