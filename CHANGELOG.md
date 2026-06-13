@@ -1,5 +1,10 @@
 # Changelog — forestalpark-web
 
+## [2026-06-13] — Accesibilidad invisible + verificación responsive
+
+- **Accesibilidad sin tocar el diseño**: pasada `enhanceA11y` en `extract-snapshots.mjs` que añade `title` a iframes (Turitop/AEMET/YouTube), `aria-label` a enlaces sin nombre (columnas Avada), labels a campos de formulario y `aria-hidden` al iframe de GTM y al campo reCAPTCHA. **Lighthouse accesibilidad 85 → 94** sin alterar colores ni maquetado. El contraste AAA queda pendiente de decisión (cambiaría los colores).
+- **Verificación responsive vs producción**: paridad confirmada en escritorio (pixel-idéntico), móvil 390px (altura 16193px vs 16211px) y tablet 820px (altura 11431px idéntica). El sitio replica el comportamiento responsive del original porque conserva CSS, DOM y JS. Las imágenes lazy cargan al hacer scroll igual que el original.
+
 ## [2026-06-13] — Cobertura total de URLs + formularios funcionales
 
 - **Formularios**: `public/js/fp-forms.js` intercepta los formularios Fusion (captura + `stopImmediatePropagation`) y los reenvía a `/api/contacto.php`; éxito → `/gracias/`. Verificado end-to-end. `contacto.php` distingue newsletter de contacto.

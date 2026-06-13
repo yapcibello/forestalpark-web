@@ -43,6 +43,54 @@ function walk(dir) {
   return out;
 }
 
+// Mejora de accesibilidad NO visible (solo atributos ARIA/title): no cambia
+// el maquetado ni los colores. Corrige los fallos recurrentes detectados con
+// Lighthouse: iframes sin title, enlaces sin nombre accesible, campos sin label.
+const FIELD_LABELS = {
+  es: { your_name: 'Nombre', your_email: 'Correo electrónico', email: 'Correo electrónico', mensaje: 'Mensaje', description: 'Mensaje', telefono: 'Teléfono', phone: 'Teléfono' },
+  en: { your_name: 'Name', your_email: 'Email', email: 'Email', mensaje: 'Message', description: 'Message', telefono: 'Phone', phone: 'Phone' },
+};
+function humanizeHref(href) {
+  try {
+    const path = href.replace(/^https?:\/\/[^/]+/, '').replace(/[?#].*$/, '');
+    const seg = path.replace(/\/(en)\//, '/').split('/').filter(Boolean).pop();
+    if (!seg) return null; // raíz
+    return seg.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  } catch { return null; }
+}
+function enhanceA11y(body, lang) {
+  if (!body) return;
+  const home = lang === 'en' ? 'Inicio (Home)' : 'Inicio';
+  for (const f of body.querySelectorAll('iframe')) {
+    if (f.getAttribute('title')) continue;
+    const src = f.getAttribute('src') || '';
+    if (/googletagmanager/.test(src) || !src) { f.setAttribute('aria-hidden', 'true'); f.setAttribute('title', 'tag manager'); continue; }
+    let t = lang === 'en' ? 'Embedded content' : 'Contenido incrustado';
+    if (/turitop/.test(src)) t = lang === 'en' ? 'Booking system' : 'Sistema de reservas';
+    else if (/aemet/.test(src)) t = lang === 'en' ? 'AEMET weather forecast' : 'Predicción meteorológica de AEMET';
+    else if (/youtube|youtu\.be/.test(src)) t = lang === 'en' ? 'YouTube video' : 'Vídeo de YouTube';
+    f.setAttribute('title', t);
+  }
+  for (const a of body.querySelectorAll('a')) {
+    if (!a.getAttribute('href')) continue;
+    if ((a.text || '').trim()) continue;
+    if (a.getAttribute('aria-label') || a.getAttribute('title')) continue;
+    const imgAlt = a.querySelectorAll('img').map((i) => i.getAttribute('alt')).filter(Boolean).join('');
+    if (imgAlt) continue;
+    a.setAttribute('aria-label', humanizeHref(a.getAttribute('href')) || home);
+  }
+  const labels = FIELD_LABELS[lang] || FIELD_LABELS.es;
+  for (const el of body.querySelectorAll('input, textarea, select')) {
+    const type = (el.getAttribute('type') || '').toLowerCase();
+    if (type === 'hidden') continue;
+    const name = el.getAttribute('name') || '';
+    if (/recaptcha/i.test(name)) { el.setAttribute('aria-hidden', 'true'); el.setAttribute('tabindex', '-1'); continue; }
+    if (el.getAttribute('aria-label') || el.getAttribute('aria-labelledby')) continue;
+    const label = labels[name] || el.getAttribute('placeholder') || (type === 'checkbox' ? (lang === 'en' ? 'Consent' : 'Consentimiento') : name);
+    if (label) el.setAttribute('aria-label', label);
+  }
+}
+
 function extract(file) {
   const raw = readFileSync(file, 'utf8');
   const doc = parse(raw, { comment: true, blockTextElements: { script: true, style: true } });
@@ -81,6 +129,10 @@ function extract(file) {
   const title = (headEl?.querySelector('title')?.text || '').trim();
   const metaDesc = headEl?.querySelector('meta[name="description"]')?.getAttribute('content') || '';
   const canonical = headEl?.querySelector('link[rel="canonical"]')?.getAttribute('href') || '';
+
+  // Mejora de accesibilidad invisible (no cambia maquetado ni colores).
+  const lang = htmlLang.startsWith('en') ? 'en' : 'es';
+  enhanceA11y(bodyEl, lang);
 
   const headHtml = localizeAssets(headEl?.innerHTML || '');
   const bodyHtml = localizeAssets(bodyEl?.innerHTML || '');
