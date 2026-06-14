@@ -38,6 +38,22 @@ Si todos los items responden "No" en la columna 2 y la evidencia esta vacia, el 
 
 <!-- Anade nuevas entradas arriba de este comentario, en orden cronologico inverso (mas reciente primero). -->
 
+### [2026-06-14] — Multimedia: recompresión in situ + WebP-swap (sin AVIF/`<picture>`)
+
+**Que se desvio**: el plan F0-7 / ítem P4 preveía optimización multimedia "AVIF/WebP". Se entregó: (1) recompresión in situ de PNG/JPG manteniendo formato, nombre y dimensiones (cero cambios de referencia), y (2) conversión a WebP con reescritura de referencias `.png/.jpg → .webp` SOLO en los `<body>` de los snapshots (5523 refs en 175 archivos). **NO se generó AVIF ni se introdujo `<picture>`/`<source>`**.
+
+**Por que**: el requisito #1 (réplica visual exacta, sin tocar maquetado/DOM) prevalece. AVIF requiere `<picture><source>` con fallback → añade nodos al DOM, violando la paridad de nº de nodos verificada. WebP tiene ~98 % de soporte de navegador y permite el swap por extensión sin añadir nodos (solo cambia el texto del atributo). La auditoría CWV local mostró que el LCP de las pillar está limitado por *render delay*, no por descarga, así que el objetivo real del multimedia es reducir bytes para usuarios móviles/páginas con héroes pesados, cumplido con WebP. El `og:image` del `<head>` se dejó en PNG/JPG por compatibilidad con scrapers sociales.
+
+**Impacto**: 45 PNG/JPG recomprimidos + 176 WebP nuevos en `apps/www/public/wp-content/uploads`; 175 `*.body.html` con referencias a WebP. PNG dist 21,3 → 6,7 MB; raster servido mucho más ligero. Réplica visual intacta (nº de nodos de las 4 pillar sin cambios). Quedan en dist los PNG/JPG originales (no servidos salvo `og:image`) como peso muerto en disco, sin impacto en runtime. Pendiente menor: `blog-hero-background.jpg` es un HTML, no un JPEG (artefacto de migración).
+
+**Decision**: WebP-swap como entrega de F0-7. AVIF queda disponible como mejora futura SOLO si se acepta introducir `<picture>` (cambio de DOM) — requeriría aprobación explícita por la regla de réplica.
+
+**Aprobacion del usuario**: el usuario eligió "Hacer WebP-swap ahora" en la pregunta de cierre de multimedia (2026-06-14), tras explicarle el trade-off réplica vs AVIF/`<picture>`.
+
+**Fecha**: 2026-06-14.
+
+---
+
 ### [2026-06-13] — Migración por snapshot fiel en vez de Content Collections
 
 **Que se desvio**: el plan de la fase migración (heredado de logopedajessica-web) prescribía extraer el contenido del WordPress a Content Collections (posts/faqs) y re-componentizar las páginas en Astro. En su lugar se adoptó **preservación de snapshot**: se sirve el `<head>`/`<body>` original de cada una de las 145 páginas vía una ruta catch-all de Astro (`set:html` + scripts re-emitidos como `is:inline`), localizando solo los assets propios.
@@ -57,6 +73,6 @@ Si todos los items responden "No" en la columna 2 y la evidencia esta vacia, el 
 | Item aplazado | Depende de datos emergentes? | Evidencia concreta | Que se ahorra ahora vs diferido? |
 |:---|:---:|:---|:---|
 | Content Collections (posts/faqs) | Sí | Las fases SEO/GEO (8-9) determinarán si hace falta re-componentizar plantillas concretas para schema/structured-answers; hoy los snapshots ya sirven el contenido fiel | Evita re-componentizar 145 páginas que ya se ven idénticas; se hará selectivo solo donde la auditoría lo pida |
-| Optimización multimedia AVIF/WebP | Sí | La auditoría CWV (fase 13) dirá qué imágenes penalizan LCP; reescribir `<img src>` ahora arriesga la fidelidad pixel recién verificada | Evita tocar 378 assets a ciegas; pasada de performance dirigida por métricas reales |
+| Optimización multimedia AVIF/WebP | Sí | La auditoría CWV (fase 13) dirá qué imágenes penalizan LCP; reescribir `<img src>` ahora arriesga la fidelidad pixel recién verificada | Evita tocar 378 assets a ciegas; pasada de performance dirigida por métricas reales — **RESUELTO 2026-06-14**: recompresión in situ + WebP-swap (sin AVIF), ver entrada superior |
 
 ---

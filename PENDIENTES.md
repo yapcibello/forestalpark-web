@@ -6,7 +6,8 @@
 - [ ] **F0-2/3** Credenciales FTP (`.env`) y SMTP (`config.local.php` en servidor) + PHPMailer
 - [ ] **F0-4** Verificar las 145 URLs en 200 tras el deploy
 - [ ] **F0-5** Remediación a11y (iframes title, labels, contraste) → AA total
-- [ ] **F0-6** Mejorar textos de páginas pillar (requisito del cliente) sin tocar maquetado
+- [x] **F0-6** Mejorar textos de páginas pillar (requisito del cliente) sin tocar maquetado — hecho en las 4 pillar (copywriting + GEO + structured-answers), nº de nodos idéntico, datos/legal preservados
+- [x] **F0-7** Optimización multimedia — recompresión in situ (sharp) + conversión a WebP con swap de referencias en `<body>` (5523 refs); réplica visual intacta (sin `<picture>`/AVIF)
 
 ## Mejoras
 

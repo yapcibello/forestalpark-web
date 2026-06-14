@@ -1,5 +1,20 @@
 # Changelog — forestalpark-web
 
+## [2026-06-14] — Mejora de textos pillar (SEO/GEO) + optimización multimedia
+
+### Textos de páginas pillar (F0-6)
+
+- Reescritura SEO/GEO de las 4 páginas pillar (home, circuitos-de-aventura, compra-aventura-tirolinas, eventos-a-medida) aplicando los skills `copywriting` + `geo-llm-citability` + `structured-answers`: definiciones autocontenidas y verificables al inicio (entidad + ubicación + dato), respuestas de FAQ directas ("Sí, puedes…"), frases más cortas sin muletillas.
+- **Solo se editó texto dentro de etiquetas existentes** → nº de nodos idéntico por página (circuitos 2526, home 2589, compra 2442, eventos 2457); maquetado, imágenes y vídeos intactos. Datos y significado legal preservados (alturas, edades, 48/24 h, 110/130 kg, 69 años, PETZL PANJI, enlaces `reservas@`/WhatsApp).
+- Técnica: 4 agentes `implementer` en paralelo (archivos disjuntos) + 3 pasadas de consolidación con scripts Node autoverificables (match único / `replaceAll` + guard de nº de nodos) para unificar el contenido de FAQ compartido entre páginas (incl. duplicados desktop/móvil). 0 párrafos en estilo "original" tras la pasada.
+
+### Optimización multimedia (F0-7)
+
+- **Recompresión in situ** con `sharp` de 45 PNG/JPG pesados (PNG paleta + dithering, JPG mozjpeg), mismas dimensiones y nombres → cero cambios de referencia. PNG en dist: 21,3 → 6,7 MB.
+- **Conversión a WebP + swap de referencias**: 176 WebP generados; **5523 referencias `.png/.jpg → .webp`** reescritas en 175 `*.body.html` (solo en `<body>`; el `og:image` social del `<head>` se mantiene en PNG/JPG). Sin `<picture>` ni AVIF para no alterar el DOM (réplica visual intacta; WebP ~98 % soporte). Ganancia por imagen hasta −94 % (Teambuilding 914 KB → 53 KB).
+- Calidad verificada visualmente (sin banding) e integridad de referencias (248/249 webp resuelven; la 1 restante ya estaba rota en el WP original, no pillar). `sharp` añadido a devDependencies.
+- Hallazgo: `wp-content/uploads/2019/11/blog-hero-background.jpg` no es un JPEG sino un documento HTML (artefacto de migración) — pendiente de revisar.
+
 ## [2026-06-14] — Contraste AAA (7:1)
 
 - **Override de contraste WCAG AAA**: `apps/www/public/css/fp-a11y-contrast.css` cargado tras el CSS de Avada en el catch-all. Oscurece solo los colores que no llegaban a AAA, fiel a la marca: verde salvia `rgb(151,164,117)` → verde bosque `#2e3d1a`; botones verdes con fondo `#36481f` + texto blanco; alertas naranja → fondo rust `#8f3408`; banner de cookies legible.

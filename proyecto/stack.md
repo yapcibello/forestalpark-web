@@ -45,5 +45,5 @@ Las versiones se gestionan con **pnpm catalog** en `pnpm-workspace.yaml` — los
 |-------------|-----------|
 | pnpm 9.15.0 | Gestor de paquetes y workspace del monorepo |
 | node >=20 (instalado v26.1.0) | Runtime |
-| sharp (fase 4) | Optimización de imágenes → AVIF/WebP |
+| sharp ^0.35 (devDep) | Optimización de imágenes → recompresión in situ PNG/JPG + conversión a WebP (F0-7) |
 | lightningcss | Minificación CSS (vite.build.cssMinify) |

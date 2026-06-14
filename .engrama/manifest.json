@@ -27,6 +27,15 @@
       "memories": 5,
       "prompts": 0,
       "max_updated_at": "2026-06-14 08:26:40"
+    },
+    {
+      "id": "bc961afd",
+      "created_by": "yapci",
+      "created_at": "2026-06-14T12:44:25Z",
+      "sessions": 20,
+      "memories": 5,
+      "prompts": 0,
+      "max_updated_at": "2026-06-14 12:44:13"
     }
   ]
 }
