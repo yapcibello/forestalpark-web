@@ -35,6 +35,8 @@ const touristSchema = isHome ? buildTouristAttractionSchema(page.lang as 'es' | 
     {touristSchema && (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(touristSchema)} />
     )}
+    {/* Overrides de contraste AAA — después del CSS de Avada para prevalecer. */}
+    <link rel="stylesheet" href="/css/fp-a11y-contrast.css" />
   </head>
   <body class={page.bodyClass} {...page.bodyDataAttrs}>
     <Fragment set:html={bodyHtml} />

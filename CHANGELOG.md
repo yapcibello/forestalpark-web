@@ -1,5 +1,11 @@
 # Changelog — forestalpark-web
 
+## [2026-06-14] — Contraste AAA (7:1)
+
+- **Override de contraste WCAG AAA**: `apps/www/public/css/fp-a11y-contrast.css` cargado tras el CSS de Avada en el catch-all. Oscurece solo los colores que no llegaban a AAA, fiel a la marca: verde salvia `rgb(151,164,117)` → verde bosque `#2e3d1a`; botones verdes con fondo `#36481f` + texto blanco; alertas naranja → fondo rust `#8f3408`; banner de cookies legible.
+- **Resultado**: contraste AAA verificado con checker propio (7:1 normal / 4.5:1 grande) — **0 fallos reales** en home y circuitos (excluyendo texto sobre imágenes de fondo). Lighthouse accesibilidad **97** (home). El maquetado, tipografías e imágenes no cambian; solo color.
+- Método: Avada colorea con variables de paleta `--awb-color1..8`; se afinó por selectores Fusion + override puntual de variables de texto decorativo.
+
 ## [2026-06-13] — Accesibilidad invisible + verificación responsive
 
 - **Accesibilidad sin tocar el diseño**: pasada `enhanceA11y` en `extract-snapshots.mjs` que añade `title` a iframes (Turitop/AEMET/YouTube), `aria-label` a enlaces sin nombre (columnas Avada), labels a campos de formulario y `aria-hidden` al iframe de GTM y al campo reCAPTCHA. **Lighthouse accesibilidad 85 → 94** sin alterar colores ni maquetado. El contraste AAA queda pendiente de decisión (cambiaría los colores).

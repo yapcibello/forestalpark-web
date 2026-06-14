@@ -1,0 +1,109 @@
+/*
+ * Overrides de contraste WCAG 2.2 AAA — Forestal Park Tenerife.
+ *
+ * Se carga DESPUÉS del CSS de Avada (gana por orden + !important puntual).
+ * Oscurece solo los colores que no llegan a AAA (7:1 texto normal, 4.5:1
+ * texto grande) manteniéndose lo más fiel posible a la paleta de marca.
+ * NO cambia maquetado, tipografías, imágenes ni estructura: solo color.
+ *
+ *   verde salvia rgb(151,164,117) → verde bosque oscuro #2e3d1a (texto/títulos)
+ *   botón verde  fondo salvia     → fondo #36481f + texto blanco
+ *   naranja CTA  #ec6330          → rust #8f3408 (texto pequeño) / alertas con fondo rust
+ */
+
+:root {
+  --fp-aaa-green: #2e3d1a;
+  --fp-aaa-green-btn: #36481f;
+  --fp-aaa-rust: #8f3408;
+}
+
+/* Títulos Fusion (verde salvia o pálidos) → verde bosque oscuro */
+.fusion-title-heading,
+.fusion-title h1, .fusion-title h2, .fusion-title h3, .fusion-title h4, .fusion-title h5, .fusion-title h6,
+.fusion-toggle-heading,
+.fusion-accordian .panel-title a {
+  color: var(--fp-aaa-green) !important;
+}
+
+/* Texto del menú (principal, desplegables y móvil) */
+.fusion-menu .menu-text,
+.fusion-main-menu .menu-text,
+.fusion-mobile-menu-design-flyout .menu-text,
+ul.fusion-menu > li > a .menu-text {
+  color: var(--fp-aaa-green) !important;
+}
+
+/* Enlaces de contenido y de footer en verde salvia o blanco sobre salvia */
+.fusion-body .post-content a:not(.fusion-button),
+.fusion-footer a, .fusion-footer-widget-area a, .fusion-footer-copyright-area a,
+.fusion-footer p, .fusion-footer-copyright-area, .fusion-footer-copyright-area p {
+  color: var(--fp-aaa-green) !important;
+}
+
+/* Botones verdes rellenos: fondo más oscuro + texto blanco (7:1).
+   Avada colorea el texto con la variable --button_accent_color, así que se
+   sobreescribe la variable además del color directo. */
+.fusion-button.button-default,
+.fusion-button-default,
+.awb-button.button-default {
+  background-color: var(--fp-aaa-green-btn) !important;
+  border-color: var(--fp-aaa-green-btn) !important;
+  --button_accent_color: #ffffff !important;
+  --awb-color1: #ffffff !important;
+}
+.fusion-button.button-default .fusion-button-text,
+.fusion-button.button-default .awb-button__text,
+.awb-button.button-default .awb-button__text,
+.fusion-button.button-default .fusion-button-text-left,
+.fusion-button.button-default i {
+  color: #ffffff !important;
+}
+
+/* Alertas naranja (alert-danger/error/warning): fondo rust + texto y enlaces blancos */
+.fusion-alert.alert-danger,
+.fusion-alert.alert-error,
+.fusion-alert.alert-warning,
+.fusion-alert.alert-custom {
+  background-color: var(--fp-aaa-rust) !important;
+  border-color: var(--fp-aaa-rust) !important;
+}
+.fusion-alert.alert-danger .fusion-alert-content,
+.fusion-alert.alert-error .fusion-alert-content,
+.fusion-alert.alert-warning .fusion-alert-content,
+.fusion-alert.alert-custom .fusion-alert-content,
+.fusion-alert .fusion-alert-content,
+.fusion-alert .fusion-alert-content a {
+  color: #ffffff !important;
+}
+
+/* Textos decorativos que usan colores claros de la paleta Avada como color de
+   fuente (no de fondo) → verde oscuro. Solo afecta a elementos que ponen ese
+   color como texto en su style inline; no toca fondos. */
+[style*="color: var(--awb-color6)"],
+[style*="color:var(--awb-color6)"],
+[style*="color: var(--awb-color7)"],
+[style*="color:var(--awb-color7)"] {
+  color: var(--fp-aaa-green) !important;
+}
+
+/* Banner de consentimiento (cookie-script, terceros).
+   El banner tiene fondo claro (amarillo pálido); los botones aceptar/rechazar
+   tienen fondo oscuro propio → texto blanco. Los enlaces sobre el banner claro
+   van en verde oscuro. */
+#cookiescript_accept,
+#cookiescript_accept *,
+#cookiescript_reject,
+#cookiescript_reject *,
+#cookiescript_save,
+#cookiescript_save * {
+  color: #ffffff !important;
+}
+#cookiescript_accept {
+  background-color: var(--fp-aaa-green-btn) !important;
+}
+#cookiescript_readmore,
+#cookiescript_readmore a,
+#cookiescript_injected a,
+#cookiescript_injected .cookiescript_link {
+  color: var(--fp-aaa-green) !important;
+}
